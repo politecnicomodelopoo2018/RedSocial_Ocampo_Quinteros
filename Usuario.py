@@ -68,3 +68,10 @@ class Usuario (object):
         if self.Contrasena == ContrasenaValidar:
             Validacion = True
         return Validacion
+
+    # ----------TraerObjetoDeDataBase------------
+
+    def TraerObjeto(self, idUsuario):
+        Cursor = DB().run("SELECT * FROM Usuario WHERE idUsuario = ('%s')" % (idUsuario))
+        for item in Cursor:
+            print(item)
