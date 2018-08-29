@@ -46,22 +46,22 @@ class Usuario (object):
 
     # ----------Delete & UpdateNombreVisible & UpdateBio-------------
 
-    def DeleteManual(self):
-        DB().run("DELETE FROM Usuario WHERE idUsuario = ('%d')" % (self.idUsuario))
+    def DeleteManual(self, id):
+        DB().run("DELETE FROM Usuario WHERE idUsuario = ('%d')" % (id))
 
     def UpdateNombreVisible(self, Nombre):
         self.SetNombreVisible(Nombre)
-        DB.run("UPDATE Usuario SET Nombrevisible_Usuario = ('%s')" % (self.NombreVisible))
+        DB().run("UPDATE Usuario SET Nombrevisible_Usuario = ('%s')" % (self.NombreVisible))
 
     def UpdateBiografia(self, Bio):
         self.SetBiografia(Bio)
-        DB.run("UPDATE Usuario SET Biografia_Usuario = ('%s')" % (self.Biografia))
+        DB().run("UPDATE Usuario SET Biografia_Usuario = ('%s')" % (self.Biografia))
 
     # -------------ContrasenaUpdate--------------
 
-    def UpdateContrasena(self, Contrasena):
-        self.SetContrasena(Contrasena)
-        DB.run("UPDATE Usuario SET Contraseña_Usuario = ('%s')" % (self.Contrasena))
+    def UpdateContrasena(self, contrasena):
+        self.SetContrasena(contrasena)
+        DB().run("UPDATE Usuario SET Contraseña_Usuario = ('%s') WHERE idUsuario = ('%s')" % (self.Contrasena, self.idUsuario))
 
     def ValidarContrasena(self, ContrasenaValidar):
         Validacion = False
@@ -74,4 +74,10 @@ class Usuario (object):
     def TraerObjeto(self, idUsuario):
         Cursor = DB().run("SELECT * FROM Usuario WHERE idUsuario = ('%s')" % (idUsuario))
         for item in Cursor:
-            print(item)
+            self.idUsuario = item["idUsuario"]
+            self.Nombre = item["Nombre_Usuario"]
+            self.Email = item["Email_Usuario"]
+            self.Contrasena = item["Contraseña_Usuario"]
+            self.FechaIngreso = item["Fecha_ingreso_Usuario"]
+            self.NombreVisible = item["Nombrevisible_Usuario"]
+            self.Biografia = item["Biografia_Usuario"]

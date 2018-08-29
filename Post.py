@@ -29,7 +29,7 @@ class Post (object):
         self.Ubicacion_Post = Ubicacion_Post
 
     def Insert(self):
-        cursor = DB().run("INSERT INTO Post (Fecha_Creacion_Post, Descripcion_Post, Ubicacion_Post) VALUES ('%s', '%s', '%s')" % (self.Fecha_Creacion_Post, self.Descripcion_Post, self.Ubicacion_Post))
+        cursor = DB().run("INSERT INTO Post (Fecha_Creacion_Post, Descripcion_Post, Ubicacion_Post, Usuario_idUsuario) VALUES ('%s', '%s', '%s', '%s')" % (self.Fecha_Creacion_Post, self.Descripcion_Post, self.Ubicacion_Post, self.Usuario_idUsuario))
         self.idPost = cursor.lastrowid
 
     def SubirFoto(self, idUsuario, URL_Imagen, Descripcion, Ubicacion):
@@ -42,13 +42,13 @@ class Post (object):
 
     ## --------Updates&Deletes-------------
 
-    def Delete(self):
-        DB().run("DELETE FROM Post WHERE idPost = ('%d')" % (self.idPost))
+    def Delete(self,id):
+        DB().run("DELETE FROM Post WHERE idPost = ('%d')" % (id))
 
     def UpdateDescripcion(self, descri):
         self.SetDescripcion_Post(descri)
-        DB.run("UPDATE Post SET Descripcion_Post = ('%s')" % (self.Descripcion_Post))
+        DB().run("UPDATE Post SET Descripcion_Post = ('%s')" % (self.Descripcion_Post))
 
     def UpdateUbicacion(self, ubicacion):
         self.SetUbicacion(ubicacion)
-        DB.run("UPDATE Post SET Ubicacion_Post = ('%s')" % (self.Ubicacion_Post))
+        DB().run("UPDATE Post SET Ubicacion_Post = ('%s')" % (self.Ubicacion_Post))
