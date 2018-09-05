@@ -7,7 +7,7 @@ class Etiqueta(object):
     def setUsuarioIdU(self, UidU):
         self.Usuario_idUsuario = UidU
 
-    def setUsuarioIdUone(self, idPost):
+    def setidPost(self, idPost):
         self.Post_idPost = idPost
 
     def Insert(self):

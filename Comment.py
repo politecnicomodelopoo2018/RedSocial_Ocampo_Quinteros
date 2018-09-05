@@ -1,7 +1,7 @@
 from DataBase import DB
 
 class Comment (object):
-    idComment = None
+    idUHU = None
     Descripcion = None
     Post_idPost = None
 
@@ -11,6 +11,11 @@ class Comment (object):
     def SetPost_idPost(self, Post_idPost):
         self.Post_idPost = Post_idPost
 
+    def SetIdUHU(self, idUHU):
+        self.idUHU = idUHU
+
     def Insert(self):
-        Cursor = DB().run("INSERT INTO Comment (Descripcion_Comment, Post_idPost) VALUES ('%s', '%s')" % (self.Descripcion, self.Post_idPost))
-        self.idComment = Cursor.lastrowid
+        DB().run("INSERT INTO `Comment` (Descripcion_Comment, Usuario_idUsuario, Post_idPost) VALUES ('%s', '%s', '%s')" % (self.Descripcion, self.Post_idPost, self.idUHU))
+
+    def Delete(self):
+        DB().run("DELETE FROM `Comment`")

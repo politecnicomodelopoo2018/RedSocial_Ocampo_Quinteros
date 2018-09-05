@@ -11,9 +11,8 @@ DB().SetConnection('127.0.0.1', 'root', 'alumno', 'mydb')
 unUsuario = Usuario()
 unPost = Post()
 unLike = Like()
-
-unLike.SetPost_idPost(1)
-unLike.SetUsuario_idUsuario(1)
-unLike.Insert()
+unUHU = UHU()
+unComment = Comment()
+unaEtiqueta = Etiqueta()
 
 

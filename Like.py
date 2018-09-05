@@ -12,3 +12,6 @@ class Like(object):
 
     def Insert(self):
         DB().run("INSERT INTO `Like` (Usuario_idUsuario, Post_idPost) VALUES (%s, %s)" % (self.Usuario_idUsuario, self.Post_idPost))
+
+    def Delete(self):
+        DB().run("DELETE FROM Like")
