@@ -5,20 +5,21 @@
     <title>Registro</title>
 </head>
 <body>
-    <span class="coreSpriteFacebookIconInverted cneKx"></span>
     <h2>Registro</h2>
-<form action="/action_page.php">
-<input type="text" name="Usuario" placeholder="Usuario">
-<br>
-<input type="password" name="Contrasena" placeholder="Contraseña">
+<form action="/" method="POST">
+    <input type="text" name="Usuario" placeholder="Usuario" required>
     <br>
-    <input type="text" name="Email" placeholder="Email">
+    <input type="text" name="Contrasena" placeholder="Contraseña" required>
     <br>
-    <input type="text" name="Nombre" placeholder="Nombre">
+    <input type="email" name="Email" placeholder="Email" required>
     <br>
-    <input type="text" name="biografia" placeholder="Biografia">
-    <a ><button>Enviar</button></a>
-<br><br>
+    <input type="text" name="Nombre" placeholder="Nombre" required>
+    <br>
+    <input type="text" name="Bio" placeholder="Biograchota" required>
+    <br>
+    <PRE>
+    <a href="Registro.html" methods="post"><button>Enviar</button></a>
+    </PRE>
 </form>
 </body>
 </html>
