@@ -28,8 +28,8 @@ def Logeoin():
     Bio = request.form.get("Bio")
 
 
-
-    unUsuario.Registro(Usuario, Contra, Email, Nombre, Bio)
+    if (type(Usuario) != None , type(Contra) != None , type(Email) != None , type(Nombre) != None , type(Bio) != None):
+        unUsuario.Registro(Usuario, Contra, Email, Nombre, Bio)
 
     return render_template("helloworld.html")
 
