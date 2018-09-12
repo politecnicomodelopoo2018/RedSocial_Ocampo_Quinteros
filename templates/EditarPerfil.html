@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Instagrom || EditarPerfil</title>
+</head>
+<body>
+<h2>EditarPerfil</h2>
+<form action="/Perfil" method="POST">
+    <input value="{{ContraEdit}}" type="text" name="Contrasena" placeholder="Contraseña" required>
+    <br>
+    <input value="{{NombreEdit}}" type="text" name="Nombre" placeholder="Nombre" required>
+    <br>
+    <input value="{{BioEdit}}" type="text" name="Bio" placeholder="Biograchota" required>
+    <br>
+    <input type="submit" value="GoBack">
+</form>
+    <a href="/?BorrarCuenta=1"><button>BorrarCuenta</button></a>
+</body>
+</html>

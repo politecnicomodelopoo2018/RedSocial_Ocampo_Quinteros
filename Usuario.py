@@ -46,8 +46,8 @@ class Usuario (object):
 
     # ----------Delete & UpdateNombreVisible & UpdateBio-------------
 
-    def DeleteManual(self, id):
-        DB().run("DELETE FROM Usuario WHERE idUsuario = ('%d')" % (id))
+    def DeleteManual(self):
+        DB().run("DELETE FROM Usuario WHERE idUsuario = ('%d')" % (self.idUsuario))
 
     def UpdateNombreVisible(self, Nombre):
         self.SetNombreVisible(Nombre)
@@ -71,8 +71,8 @@ class Usuario (object):
 
     # ----------TraerObjetoDeDataBase------------
 
-    def TraerObjeto(self, idUsuario):
-        Cursor = DB().run("SELECT * FROM Usuario WHERE idUsuario = ('%s')" % (idUsuario))
+    def TraerObjeto(self, Usuario):
+        Cursor = DB().run("SELECT * FROM Usuario WHERE Nombre_Usuario = ('%s')" % (Usuario))
         for item in Cursor:
             self.idUsuario = item["idUsuario"]
             self.Nombre = item["Nombre_Usuario"]

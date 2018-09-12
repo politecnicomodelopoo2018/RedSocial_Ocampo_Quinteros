@@ -27,8 +27,11 @@ def Logeoin():
     Nombre = request.form.get("Nombre")
     Bio = request.form.get("Bio")
 
+    if request.args.get('BorrarCuenta') == '1':
+        unUsuario.DeleteManual()
 
-    if (type(Usuario) != None , type(Contra) != None , type(Email) != None , type(Nombre) != None , type(Bio) != None):
+
+    if type(Usuario) != type(None):
         unUsuario.Registro(Usuario, Contra, Email, Nombre, Bio)
 
     return render_template("helloworld.html")
@@ -37,14 +40,36 @@ def Logeoin():
 def Register():
     return render_template("Registro.html")
 
-@app.route("/Inicio")
-def Inicio():
-    return render_template("Inicio.html")
 
-@app.route("/Perfil")
+@app.route("/Inicio", methods=['GET', 'POST'])
+def Inicio():
+    Usuario1 = request.form.get("Usuario")
+    Contrasena1 = request.form.get("Contrasena")
+
+    if (type(Usuario1) != None, type(Contrasena1) != None):
+        unUsuario.TraerObjeto(Usuario1)
+        if unUsuario.ValidarContrasena(Contrasena1) == True:
+            return render_template("Inicio.html", user = unUsuario.Nombre)
+        if unUsuario.ValidarContrasena(Contrasena1) == False:
+            return redirect("/")
+
+
+@app.route("/Perfil", methods=['GET', 'POST'])
 def Perfil():
+    EditedPassword = request.form.get("Contrasena")
+    EditedName = request.form.get("Nombre")
+    EditedBio = request.form.get("Bio")
+
+    if type(EditedName) != type(None):
+        unUsuario.UpdateNombreVisible(EditedName)
+        unUsuario.UpdateBiografia(EditedBio)
+        unUsuario.UpdateContrasena(EditedPassword)
+
     return render_template("Perfil.html")
 
+@app.route("/EditarPerfil", methods=['GET', 'POST'])
+def EditarPerfil():
+    return render_template("EditarPerfil.html", UsuarioEdit = unUsuario.Nombre, ContraEdit = unUsuario.Contrasena, EmailEdit = unUsuario.Email, NombreEdit = unUsuario.NombreVisible, BioEdit = unUsuario.Biografia)
 
 if __name__ == '__main__':
     app.run(debug=True)
