@@ -17,28 +17,34 @@ unComment = Comment()
 unaEtiqueta = Etiqueta()
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
+app.secret_key = b'Tubidaor'
 
 @app.route("/", methods=['GET', 'POST'])
 def Logeoin():
+    return render_template("helloworld.html")
+
+@app.route("/LogOut", methods=['GET', 'POST'])
+def Logueoout():
+    session.pop('User', None)
+    unUsuario.Registro(None, None, None, None, None)
+    return redirect("/")
+
+@app.route("/Registro", methods=['GET', 'POST'])
+def Register():
+    return render_template("Registro.html")
+
+@app.route("/Registrado", methods=['GET', 'POST'])
+def Registrado():
     Usuario = request.form.get("Usuario")
     Contra = request.form.get("Contrasena")
     Email = request.form.get("Email")
     Nombre = request.form.get("Nombre")
     Bio = request.form.get("Bio")
 
-    if request.args.get('BorrarCuenta') == '1':
-        unUsuario.DeleteManual()
-
-
     if type(Usuario) != type(None):
         unUsuario.Registro(Usuario, Contra, Email, Nombre, Bio)
-
-    return render_template("helloworld.html")
-
-@app.route("/Registro", methods=['GET', 'POST'])
-def Register():
-    return render_template("Registro.html")
+        return redirect("/")
 
 
 @app.route("/Inicio", methods=['GET', 'POST'])
@@ -49,6 +55,7 @@ def Inicio():
     if (type(Usuario1) != None, type(Contrasena1) != None):
         unUsuario.TraerObjeto(Usuario1)
         if unUsuario.ValidarContrasena(Contrasena1) == True:
+            session['User'] = Usuario1
             return render_template("Inicio.html", user = unUsuario.Nombre)
         if unUsuario.ValidarContrasena(Contrasena1) == False:
             return redirect("/")
@@ -70,6 +77,27 @@ def Perfil():
 @app.route("/EditarPerfil", methods=['GET', 'POST'])
 def EditarPerfil():
     return render_template("EditarPerfil.html", UsuarioEdit = unUsuario.Nombre, ContraEdit = unUsuario.Contrasena, EmailEdit = unUsuario.Email, NombreEdit = unUsuario.NombreVisible, BioEdit = unUsuario.Biografia)
+
+@app.route("/BorrarCuenta", methods=['GET', 'POST'])
+def BorrarCuenta():
+    unUsuario.DeleteManual()
+    return redirect("/")
+
+@app.route("/NewPost", methods=['GET', 'POST'])
+def NewPost():
+    url = "/static/maestre-aemon-targaryen.jpg/"
+    return render_template("NewPost.html", url = url)
+
+@app.route("/SubirPost", methods = ['GET', 'POST'])
+def SubirPost():
+    request.form.get("URL_Post")
+    request.form.get("Ubicacion_Post")
+    request.form.get("Descripcion_Post")
+    return render_template("SubirPost.html")
+
+# @app.route("/Upload", methods = ['POST'])
+# def upload():
+#     target =
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -29,7 +29,7 @@ class Post (object):
         self.Ubicacion_Post = Ubicacion_Post
 
     def Insert(self):
-        cursor = DB().run("INSERT INTO Post (Fecha_Creacion_Post, Descripcion_Post, Ubicacion_Post, Usuario_idUsuario) VALUES ('%s', '%s', '%s', '%s')" % (self.Fecha_Creacion_Post, self.Descripcion_Post, self.Ubicacion_Post, self.Usuario_idUsuario))
+        cursor = DB().run("INSERT INTO Post (Fecha_Creacion_Post, Descripcion_Post, Ubicacion_Post, Usuario_idUsuario,URL_Post) VALUES ('%s', '%s', '%s', '%s')" % (self.Fecha_Creacion_Post, self.Descripcion_Post, self.Ubicacion_Post, self.Usuario_idUsuario))
         self.idPost = cursor.lastrowid
 
     def SubirFoto(self, idUsuario, URL_Imagen, Descripcion, Ubicacion):
@@ -52,3 +52,7 @@ class Post (object):
     def UpdateUbicacion(self, ubicacion):
         self.SetUbicacion(ubicacion)
         DB().run("UPDATE Post SET Ubicacion_Post = ('%s')" % (self.Ubicacion_Post))
+
+    @staticmethod
+    def GetUrl():
+        pass

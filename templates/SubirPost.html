@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "UTF -8">
+    <title>Subir</title>
+</head>
+<body>
+<h1> Subir archivo<h1>
+
+<form id = "upload-form" action = "((url_for('upload')))" method = 'POST' enctype = "multipart/forms.data">
+<input type= "file" name = "file" accept = "image/*" multiple>
+<br>
+<input type="text" name="Ubicacion_Post" placeholder="Ubicacion" required>
+<br>
+<input type="text" name="Descripcion_Post" placeholder="Descripsao" required>
+<br>
+<input type = "submit" value = "Subir">
+
+
+</body>
+</html>
