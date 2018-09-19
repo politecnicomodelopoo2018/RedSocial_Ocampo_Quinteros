@@ -9,6 +9,7 @@ class Post (object):
     Descripcion_Post = None
     Ubicacion_Post = None
     Usuario_idUsuario = None
+    URL_post = None
 
 
     ## --------SubirFotos-----------
@@ -28,8 +29,11 @@ class Post (object):
     def SetUbicacion(self,Ubicacion_Post):
         self.Ubicacion_Post = Ubicacion_Post
 
+    def SetURL (self, URL_post):
+        self.URL_post = URL_post
+
     def Insert(self):
-        cursor = DB().run("INSERT INTO Post (Fecha_Creacion_Post, Descripcion_Post, Ubicacion_Post, Usuario_idUsuario,URL_Post) VALUES ('%s', '%s', '%s', '%s')" % (self.Fecha_Creacion_Post, self.Descripcion_Post, self.Ubicacion_Post, self.Usuario_idUsuario))
+        cursor = DB().run("INSERT INTO Post (Fecha_Creacion_Post, Descripcion_Post, Ubicacion_Post, Usuario_idUsuario,URL_Post) VALUES ('%s', '%s', '%s', '%s', '%s')" % (self.Fecha_Creacion_Post, self.Descripcion_Post, self.Ubicacion_Post, self.Usuario_idUsuario, self.URL_post))
         self.idPost = cursor.lastrowid
 
     def SubirFoto(self, idUsuario, URL_Imagen, Descripcion, Ubicacion):
@@ -38,6 +42,7 @@ class Post (object):
         self.SetFecha_Creacion()
         self.SetDescripcion_Post(Descripcion)
         self.SetUbicacion(Ubicacion)
+        self.SetURL()
         self.Insert()
 
     ## --------Updates&Deletes-------------
