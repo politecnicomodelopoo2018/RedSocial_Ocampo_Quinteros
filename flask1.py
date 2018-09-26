@@ -20,11 +20,11 @@ unUHU = UHU()
 unComment = Comment()
 unaEtiqueta = Etiqueta()
 
-UPLOAD_FOLDER = '/path/to/the/uploads'
+UPLOAD_FOLDER = '/home/yisusyrama/'
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = b'Tubidaor'
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+ALLOWED_EXTENSIONS = {('png', 'jpg', 'jpeg')}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/", methods=['GET', 'POST'])
@@ -90,11 +90,6 @@ def BorrarCuenta():
     unUsuario.DeleteManual()
     return redirect("/")
 
-@app.route("/NewPost", methods=['GET', 'POST'])
-def NewPost():
-    url = "/static/maestre-aemon-targaryen.jpg/"
-    return render_template("NewPost.html", url = url)
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -102,8 +97,6 @@ def allowed_file(filename):
 @app.route("/SubirPost", methods = ['GET', 'POST'])
 def SubirPost():
     request.form.get("URL_Post")
-    request.form.get("Ubicacion_Post")
-    request.form.get("Descripcion_Post")
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
@@ -112,11 +105,22 @@ def SubirPost():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if file:
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            unPost.SubirFoto(unUsuario.idUsuario, filename, request.form.get("Descripcion_Post"), request.form.get("Ubicacion_Post"))
+            return redirect("/Perfil")
     return render_template("SubirPost.html")
+
+@app.route("/VerPost", methods = ['GET', 'POST'])
+def VerPost():
+    PostSeleccionado = []
+    cursor = DB().run("SELECT * FROM Post ORDER BY(idPost)")
+    for item in cursor:
+        unPost.TraerObjeto(item["idPost"])
+        PostSeleccionado.append(unPost)
+
+    return render_template("VerPost.html", PostSeleccionado=PostSeleccionado)
 
 if __name__ == '__main__':
     app.run(debug=True)

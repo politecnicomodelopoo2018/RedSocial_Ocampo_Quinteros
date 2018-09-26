@@ -4,7 +4,6 @@ import datetime
 
 class Post (object):
     idPost = None
-    Imagen = None
     Fecha_Creacion_Post = None
     Descripcion_Post = None
     Ubicacion_Post = None
@@ -16,9 +15,6 @@ class Post (object):
 
     def SetUsuario_idUsuario (self, Usuario_idUsuario):
         self.Usuario_idUsuario = Usuario_idUsuario
-
-    def SetImagen(self, URLImagen):
-        self.Imagen = URLImagen
 
     def SetFecha_Creacion (self):
         self.Fecha_Creacion_Post = datetime.date.today()
@@ -33,16 +29,16 @@ class Post (object):
         self.URL_post = URL_post
 
     def Insert(self):
-        cursor = DB().run("INSERT INTO Post (Fecha_Creacion_Post, Descripcion_Post, Ubicacion_Post, Usuario_idUsuario,URL_Post) VALUES ('%s', '%s', '%s', '%s', '%s')" % (self.Fecha_Creacion_Post, self.Descripcion_Post, self.Ubicacion_Post, self.Usuario_idUsuario, self.URL_post))
+        cursor = DB().run("INSERT INTO Post (Fecha_Creacion_Post, Descripcion_Post, Ubicacion_Post, "
+                          "Usuario_idUsuario,URL_Post) VALUES ('%s', '%s', '%s', '%s', '%s')" % (self.Fecha_Creacion_Post, self.Descripcion_Post, self.Ubicacion_Post, self.Usuario_idUsuario, self.URL_post))
         self.idPost = cursor.lastrowid
 
     def SubirFoto(self, idUsuario, URL_Imagen, Descripcion, Ubicacion):
         self.SetUsuario_idUsuario(idUsuario)
-        self.SetImagen(URL_Imagen)
         self.SetFecha_Creacion()
         self.SetDescripcion_Post(Descripcion)
         self.SetUbicacion(Ubicacion)
-        self.SetURL()
+        self.SetURL(URL_Imagen)
         self.Insert()
 
     ## --------Updates&Deletes-------------
@@ -58,6 +54,12 @@ class Post (object):
         self.SetUbicacion(ubicacion)
         DB().run("UPDATE Post SET Ubicacion_Post = ('%s')" % (self.Ubicacion_Post))
 
-    @staticmethod
-    def GetUrl():
-        pass
+    def TraerObjeto(self, idPost):
+        Cursor = DB().run("SELECT * FROM Post WHERE idPost = ('%s')" % (idPost))
+        for item in Cursor:
+            self.idPost = item["idPost"]
+            self.Fecha_Creacion_Post = item["Fecha_Creacion_Post"]
+            self.Descripcion_Post = item["Descripcion_Post"]
+            self.Ubicacion_Post = item["Ubicacion_Post"]
+            self.Usuario_idUsuario = item["Usuario_idUsuario"]
+            self.URL_post = item["URL_Post"]
