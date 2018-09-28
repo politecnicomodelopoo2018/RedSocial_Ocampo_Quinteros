@@ -20,7 +20,7 @@ unUHU = UHU()
 unComment = Comment()
 unaEtiqueta = Etiqueta()
 
-UPLOAD_FOLDER = '/home/yisusyrama/'
+UPLOAD_FOLDER = 'static/img/'
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = b'Tubidaor'
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -115,8 +115,9 @@ def SubirPost():
 @app.route("/VerPost", methods = ['GET', 'POST'])
 def VerPost():
     PostSeleccionado = []
-    cursor = DB().run("SELECT * FROM Post ORDER BY(idPost)")
+    cursor = DB().run("SELECT * FROM Post ORDER BY(idPost)DESC")
     for item in cursor:
+        unPost=Post()
         unPost.TraerObjeto(item["idPost"])
         PostSeleccionado.append(unPost)
 

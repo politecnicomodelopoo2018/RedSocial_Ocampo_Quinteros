@@ -7,9 +7,9 @@
 <body>
 <h1> Viendo Post </h1>
 {% for publicacion in PostSeleccionado %}
-<h6>{{publicacion.Usuario_idUsuario}}</h6>
+<h6>{{publicacion.NombreVisibleUsuario()}}</h6>
 <h6>{{publicacion.Ubicacion_Post}}</h6>
-<h6>{{publicacion.URL_post}}</h6>
+<h6><img src="/static/img/{{publicacion.URL_post}}"></h6>
 <h6>{{publicacion.Descripcion_Post}}</h6>
 <h6>{{publicacion.Fecha_Creacion_Post}}</h6>
 {% endfor %}

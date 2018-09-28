@@ -63,3 +63,9 @@ class Post (object):
             self.Ubicacion_Post = item["Ubicacion_Post"]
             self.Usuario_idUsuario = item["Usuario_idUsuario"]
             self.URL_post = item["URL_Post"]
+
+    def NombreVisibleUsuario(self):
+        NombrePene = DB().run("SELECT Nombrevisible_Usuario FROM Usuario WHERE idUsuario = ('%s')" % (self.Usuario_idUsuario))
+        for item in NombrePene:
+            NombrePenesito = item["Nombrevisible_Usuario"]
+        return NombrePenesito
