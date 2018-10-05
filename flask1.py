@@ -54,8 +54,8 @@ def Registrado():
         return redirect("/")
 
 
-@app.route("/Inicio", methods=['GET', 'POST'])
-def Inicio():
+@app.route("/Confirmacion", methods=['GET', 'POST'])
+def Confirmacion():
     Usuario1 = request.form.get("Usuario")
     Contrasena1 = request.form.get("Contrasena")
 
@@ -63,9 +63,28 @@ def Inicio():
         unUsuario.TraerObjeto(Usuario1)
         if unUsuario.ValidarContrasena(Contrasena1) == True:
             session['User'] = Usuario1
-            return render_template("Inicio.html", user = unUsuario.Nombre)
+            return redirect("/Inicio")
         if unUsuario.ValidarContrasena(Contrasena1) == False:
             return redirect("/")
+
+@app.route("/Inicio", methods = ['GET', 'POST'])
+def Inicio():
+    unUsuario.TraerObjeto(session['User'])
+    Usuariohtml = unUsuario.TraerObjeto(session['User'])
+    PostSeleccionado = []
+    cursor = DB().run("SELECT * FROM Post ORDER BY(idPost)DESC")
+    for item in cursor:
+        unPost=Post()
+        unPost.TraerObjeto(item["idPost"])
+        unPost.Contador()
+        PostSeleccionado.append(unPost)
+    cursor2 = DB().run("SELECT * FROM `Like`")
+    LikesExistentes = []
+    for item2 in cursor2:
+        unLike=Like()
+        unLike.TraerObjeto(item2["Post_idPost"], item2["Usuario_idUsuario"])
+        LikesExistentes.append(unLike)
+    return render_template("VerPost.html", PostSeleccionado=PostSeleccionado, LikesExistentes=LikesExistentes, Usuariohtml=Usuariohtml)
 
 
 @app.route("/Perfil", methods=['GET', 'POST'])
@@ -109,19 +128,23 @@ def SubirPost():
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             unPost.SubirFoto(unUsuario.idUsuario, filename, request.form.get("Descripcion_Post"), request.form.get("Ubicacion_Post"))
-            return redirect("/Perfil")
+            return redirect("/Inicio")
     return render_template("SubirPost.html")
 
-@app.route("/VerPost", methods = ['GET', 'POST'])
-def VerPost():
-    PostSeleccionado = []
-    cursor = DB().run("SELECT * FROM Post ORDER BY(idPost)DESC")
-    for item in cursor:
-        unPost=Post()
-        unPost.TraerObjeto(item["idPost"])
-        PostSeleccionado.append(unPost)
+@app.route("/Like", methods = ['GET', 'POST'])
+def Likecito():
 
-    return render_template("VerPost.html", PostSeleccionado=PostSeleccionado)
+    idPosta = request.args.get("IdPost")
+    unLike.AllSets(idPosta, unUsuario.idUsuario)
+    cursor = DB().run("SELECT * FROM `Like` WHERE Post_idPost = ('%s') AND Usuario_idUsuario = ('%s') " % (idPosta, unUsuario.idUsuario))
+    if len(cursor.fetchall())==0:
+        unLike.Insert()
+    else:
+        DB().run("DELETE FROM `Like` WHERE Post_idPost = ('%s')" % (idPosta))
+
+    return redirect("/Inicio#p" + idPosta )
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

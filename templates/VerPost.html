@@ -1,79 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <style>
-
-    .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
-        }
-
-    div {
-	  width: 600px;
-      padding: 0px;
-      border: 1px solid purple;
-      margin: 0;
-         }
-    ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #a569bd;
-    <!--position: fixed;-->
-}
-
-li {
-    float: left;
-}
-
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li a:hover:not(.active) {
-    background-color: #111;
-}
-
-
-.active {
-    background-color:  #17202a
-;
-   }
-
-ul li {display: inline-block;}
-ul li:hover {background: #555;}
-ul li:hover ul {display: block;}
-ul li ul {
-  position: absolute;
-  width: 100px;
-  display: none;
-}
-ul li ul li {
-  background: #555;
-  display: block;
-}
-ul li ul li a {display:block !important;}
-ul li ul li:hover {background: #666;}
-body {
-    background-color:  #d0d3d4
-;
-}
-</style>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/main.css">
     <meta charset="UTF-8">
     <title>VerPost</title>
 </head>
 <body>
 
 <ul>
-  <li><a href="/VerPost"> <i class="fas fa-camera"></i> Instagrom</a></li>
+  <li><a href="/Inicio"> <i class="fas fa-camera"></i> Instagrom</a></li>
    <ul>
     <li>
       <a href="#"><i class="far fa-user"></i></a>
@@ -92,10 +28,22 @@ body {
 {% for publicacion in PostSeleccionado %}
 <div class = center>
 <div>
+    <a name="p{{publicacion.idPost}}"/>
     <h6>{{publicacion.NombreVisibleUsuario()}}</h6>
     <h6> <i class="fas fa-map-marker-alt"></i> {{publicacion.Ubicacion_Post}}</h6>
     <img src="/static/img/{{publicacion.URL_post}}" height="600" width="600" class="center">
     <h6>{{publicacion.Fecha_Creacion_Post}}</h6>
+    <br>
+    {% for likescora in LikesExistentes%}
+    {% if likescora.Usuario_idUsuario == Usuariohtml.idUsuario%}
+    {% if likescora.Post_idPost == publicacion.idPost%}
+    <a href="/Like?IdPost={{publicacion.idPost}}"> <i class="fas fa-heart"></i></a>
+    {% endif %}
+    {% else%}
+    {% endif %}
+    {% endfor %}
+    <a href="/Like?IdPost={{publicacion.idPost}}"> <i class="far fa-heart"></i></a>
+    <h6>{{publicacion.NumeroDeLikes}}</h6>
     <h6>{{publicacion.NombreVisibleUsuario()}} : {{publicacion.Descripcion_Post}}</h6>
 </div>
 </div>

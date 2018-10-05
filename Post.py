@@ -9,6 +9,7 @@ class Post (object):
     Ubicacion_Post = None
     Usuario_idUsuario = None
     URL_post = None
+    NumeroDeLikes = 0
 
 
     ## --------SubirFotos-----------
@@ -69,3 +70,9 @@ class Post (object):
         for item in NombrePene:
             NombrePenesito = item["Nombrevisible_Usuario"]
         return NombrePenesito
+
+    def Contador(self):
+        cursor = DB().run("SELECT COUNT(*) as H FROM `Like` WHERE ('%s')=Post_idPost" % (self.idPost))
+        Contadores = cursor.fetchone()
+        self.NumeroDeLikes = Contadores["H"]
+
