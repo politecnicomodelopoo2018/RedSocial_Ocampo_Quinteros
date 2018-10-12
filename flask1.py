@@ -70,8 +70,21 @@ def Confirmacion():
 @app.route("/Inicio", methods = ['GET', 'POST'])
 def Inicio():
     unUsuario.TraerObjeto(session['User'])
+    EditedPassword = request.form.get("Contrasena")
+    EditedName = request.form.get("Nombre")
+    EditedBio = request.form.get("Bio")
+    if type(EditedName) != type(None):
+        unUsuario.UpdateNombreVisible(EditedName)
+        unUsuario.UpdateBiografia(EditedBio)
+        unUsuario.UpdateContrasena(EditedPassword)
+    cursorsito = DB().run("SELECT * FROM Usuario")
+    for itemsito in cursorsito:
+        if itemsito["Nombre_Usuario"] == None:
+            unUsuario.TraerObjeto(itemsito["idUsuario"])
+            unUsuario.DeleteManual()
     Usuariohtml = unUsuario.TraerObjeto(session['User'])
     PostSeleccionado = []
+    CommentSeleccionado = []
     cursor = DB().run("SELECT * FROM Post ORDER BY(idPost)DESC")
     for item in cursor:
         unPost=Post()
@@ -84,21 +97,14 @@ def Inicio():
         unLike=Like()
         unLike.TraerObjeto(item2["Post_idPost"], item2["Usuario_idUsuario"])
         LikesExistentes.append(unLike)
-    return render_template("VerPost.html", PostSeleccionado=PostSeleccionado, LikesExistentes=LikesExistentes, Usuariohtml=Usuariohtml)
+    cursor3 = DB().run("SELECT * FROM Comment ORDER BY(idComment)ASC")
+    for item3 in cursor3:
+        unComment=Comment()
+        unComment.TraerObjeto(item3["idComment"])
+        CommentSeleccionado.append(unComment)
 
+    return render_template("VerPost.html", PostSeleccionado=PostSeleccionado, LikesExistentes=LikesExistentes, Usuariohtml=Usuariohtml, UserIniciado=unUsuario, CommentSeleccionado=CommentSeleccionado)
 
-@app.route("/Perfil", methods=['GET', 'POST'])
-def Perfil():
-    EditedPassword = request.form.get("Contrasena")
-    EditedName = request.form.get("Nombre")
-    EditedBio = request.form.get("Bio")
-
-    if type(EditedName) != type(None):
-        unUsuario.UpdateNombreVisible(EditedName)
-        unUsuario.UpdateBiografia(EditedBio)
-        unUsuario.UpdateContrasena(EditedPassword)
-
-    return render_template("Perfil.html")
 
 @app.route("/EditarPerfil", methods=['GET', 'POST'])
 def EditarPerfil():
@@ -133,16 +139,40 @@ def SubirPost():
 
 @app.route("/Like", methods = ['GET', 'POST'])
 def Likecito():
-
+    unUsuario.TraerObjeto(session['User'])
     idPosta = request.args.get("IdPost")
-    unLike.AllSets(idPosta, unUsuario.idUsuario)
-    cursor = DB().run("SELECT * FROM `Like` WHERE Post_idPost = ('%s') AND Usuario_idUsuario = ('%s') " % (idPosta, unUsuario.idUsuario))
+    idUserinho = unUsuario.idUsuario
+    unLike.AllSets(idPosta, idUserinho)
+    cursor = DB().run("SELECT * FROM `Like` WHERE Post_idPost = ('%s') AND Usuario_idUsuario = ('%s') " % (idPosta, idUserinho))
     if len(cursor.fetchall())==0:
         unLike.Insert()
     else:
-        DB().run("DELETE FROM `Like` WHERE Post_idPost = ('%s')" % (idPosta))
+        DB().run("DELETE FROM `Like` WHERE Post_idPost = ('%s') AND Usuario_idUsuario = ('%s')" % (idPosta, idUserinho))
 
-    return redirect("/Inicio#p" + idPosta )
+    return redirect("/Inicio#p" + idPosta)
+
+@app.route("/Comentario", methods = ['GET', 'POST'])
+def Comentarios():
+    unUsuario.TraerObjeto(session['User'])
+    idPosta = request.args.get("IdPost")
+    Userinho = unUsuario
+    ComentariosDesc = request.form.get("Comentario")
+    unComment.AllSetsComments(ComentariosDesc, idPosta, Userinho)
+    unComment.Insert()
+    return redirect("/Inicio#p" + idPosta)
+
+@app.route("/BorrarComentario", methods = ['GET', 'POST'])
+def BorrarComentarios():
+    unUsuario.TraerObjeto(session['User'])
+    idPosta = request.args.get("IdPost")
+    idUserinho = unUsuario.idUsuario
+    idComment = request.args.get("IdComment")
+    DB().run("DELETE FROM Comment WHERE idComment = ('%s') AND Usuario_idUsuario = ('%s') AND Post_idPost = ('%s')" % (idComment, idUserinho, idPosta))
+    return redirect("/Inicio#p" + idPosta)
+
+
+
+
 
 
 

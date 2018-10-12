@@ -27,8 +27,8 @@
 <br>
 
 {% for publicacion in PostSeleccionado %}
-<div class = center>
-<div>
+    <div class = center>
+    <div>
     <a name="p{{publicacion.idPost}}"/>
     <h6>{{publicacion.NombreVisibleUsuario()}}</h6>
     <h6> <i class="fas fa-map-marker-alt"></i> {{publicacion.Ubicacion_Post}}</h6>
@@ -38,9 +38,15 @@
     <a href="/Like?IdPost={{publicacion.idPost}}"><button>Like</button></a>
     <h6>{{publicacion.NumeroDeLikes}}</h6>
     <h6>{{publicacion.NombreVisibleUsuario()}} : {{publicacion.Descripcion_Post}}</h6>
-</div>
-</div>
-<br>
+    <form action="/Comentario?IdPost={{publicacion.idPost}}" method="POST">
+        <input type="text" name="Comentario"><input type="submit" value="Comentar">
+    </form>
+    {% for Comentario in CommentSeleccionado %}
+        <h6>{{Comentario.Usuario.NombreVisible}} : {{Comentario.Descripcion}}</h6> <a href="/BorrarComentario?IdPost={{publicacion.idPost}}&IdComment={{Comentario.idComment}}"><button>BorrarComentario</button></a>
+        <br>
+    {% endfor %}
+    </div>
+    </div>
 {% endfor %}
 </body>
 </html>
