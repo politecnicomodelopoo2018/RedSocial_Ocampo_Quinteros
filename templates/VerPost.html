@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/main.css">
+<link rel="stylesheet" href="../static/css/main.css">
 <meta charset="UTF-8">
 <title>Jo-sus</title>
 </head>
 
 <body>
-
+<div class="fixed">
 <ul>
   <li><a href="/Inicio"> <i class="fas fa-camera"></i> Jo-sus</a></li>
    <ul>
@@ -20,11 +20,14 @@
       </ul>
     </li>
          <li style="float:right"><a class="active" href="/LogOut"><i class="fas fa-power-off"></i></a></li>
-
-  </ul>
+       </ul>
 </ul>
+  </div>
+
 <br>
 <br>
+<br>
+
 
 {% for publicacion in PostSeleccionado %}
     <div class = center>
@@ -35,7 +38,7 @@
     <img src="/static/img/{{publicacion.URL_post}}" height="600" width="600" class="center">
     <h6>{{publicacion.Fecha_Creacion_Post}}</h6>
     <br>
-    <a href="/Like?IdPost={{publicacion.idPost}}"><button>Like</button></a>
+    <a href="/Like?IdPost={{publicacion.idPost}}"><i class="fas fa-heart"></i></a>
     <h6>{{publicacion.NumeroDeLikes}}</h6>
     <h6>{{publicacion.NombreVisibleUsuario()}} : {{publicacion.Descripcion_Post}}</h6>
     <form action="/Comentario?IdPost={{publicacion.idPost}}" method="POST">
