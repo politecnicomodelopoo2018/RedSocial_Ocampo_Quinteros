@@ -7,7 +7,6 @@
 <title>Jo-sus</title>
 </head>
 
-
 <body background="../static/css/53766hd.png">
 <div class="fixed">
 <ul>
@@ -23,12 +22,11 @@
          <li style="float:right"><a class="active" href="/LogOut"><i class="fas fa-power-off"></i></a></li>
        </ul>
 </ul>
-  </div>
+</div>
 
 <br>
 <br>
 <br>
-
 
 {% for publicacion in PostSeleccionado %}
     <div class = center>
@@ -39,15 +37,16 @@
     <img src="/static/img/{{publicacion.URL_post}}" height="600" width="600" class="center">
     <h6>{{publicacion.Fecha_Creacion_Post}}</h6>
     <br>
-    <a href="/Like?IdPost={{publicacion.idPost}}"><span><i class="fas fa-heart"></i></span></a>
-    <h6>{{publicacion.NumeroDeLikes}}</h6>
+
+    <p <h6>{{publicacion.NumeroDeLikes}}</h6> <a href="/Like?IdPost={{publicacion.idPost}}"><span><i class="fas fa-heart"></i></span> </a></p>
+
     <h6>{{publicacion.NombreVisibleUsuario()}} : {{publicacion.Descripcion_Post}}</h6>
     <form action="/Comentario?IdPost={{publicacion.idPost}}" method="POST">
         <input type="text" name="Comentario"><input type="submit" value="Comentar">
     </form>
     {% for Comentario in CommentSeleccionado %}
         {% if Comentario.Post_idPost == publicacion.idPost %}
-            <h6>{{Comentario.Usuario.NombreVisible}} : {{Comentario.Descripcion}}</h6><a href="/BorrarComentario?IdPost={{publicacion.idPost}}&IdComment={{Comentario.idComment}}"><i class="fas fa-times"></i></a>
+            <p <h6>{{Comentario.Usuario.NombreVisible}} : {{Comentario.Descripcion}}</h6><a href="/BorrarComentario?IdPost={{publicacion.idPost}}&IdComment={{Comentario.idComment}}"><span><i class="fas fa-times"></i></span></a></p>
             <br>
         {% endif %}
     {% endfor %}
