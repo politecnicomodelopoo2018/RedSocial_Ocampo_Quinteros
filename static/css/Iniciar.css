@@ -1,0 +1,53 @@
+div {
+        width: 300px;
+        position: center ;
+
+      }
+
+div.a {
+      height: 250px;
+      border: 3px solid black;
+      background: white;
+  border-image-slice: 20;
+border-radius: 30px;
+      }
+
+.center {
+ display: block;
+ margin-left: auto;
+ margin-right: auto;
+
+        }
+.centertop{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+h1 { font-family: Cabin;
+   font-size: 60px;
+   font-style: italic;
+   font-variant: small-caps;
+   font-weight: 700;
+   line-height: 30px;
+   color: white;
+        }
+
+div.b {
+  height: 400px;
+  background: white;
+border-radius: 30px;
+margin-left:40%;
+margin-right:40%;
+margin-top: 10%;
+margin-bottom:  10%;
+}
+
+h2 {
+  font-family: Cabin;
+     font-size: 20px;
+     font-style: italic;
+     font-variant: small-caps;
+     font-weight: 700;
+     line-height: 20px;
+     color: black;
+}
