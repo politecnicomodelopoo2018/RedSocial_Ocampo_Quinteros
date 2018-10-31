@@ -34,7 +34,7 @@ def Logeoin():
 @app.route("/LogOut", methods=['GET', 'POST'])
 def Logueoout():
     session.pop('User', None)
-    unUsuario.Registro(None, None, None, None, None)
+    unUsuario.RegistroSinInsert(None, None, None, None, None)
     return redirect("/")
 
 @app.route("/Registro", methods=['GET', 'POST'])

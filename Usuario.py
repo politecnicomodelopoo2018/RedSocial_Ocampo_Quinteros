@@ -44,6 +44,14 @@ class Usuario (object):
         self.SetBiografia(Bio)
         self.Insert()
 
+    def RegistroSinInsert(self, Name, Contra, Email, NombreVi, Bio):
+        self.SetNombre(Name)
+        self.SetContrasena(Contra)
+        self.SetMail(Email)
+        self.SetFecha()
+        self.SetNombreVisible(NombreVi)
+        self.SetBiografia(Bio)
+
     # ----------Delete & UpdateNombreVisible & UpdateBio-------------
 
     def DeleteManual(self):

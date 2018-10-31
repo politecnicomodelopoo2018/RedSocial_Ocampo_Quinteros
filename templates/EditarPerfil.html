@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Jo-sus || EditarPerfil</title>
 
+
 <div class="fixed">
 <ul>
   <li><a href="/Inicio"> <i class="fas fa-camera"></i> Jo-sus</a></li>
@@ -26,25 +27,29 @@
 </div>
 </head>
 <body background="../static/css/53766hd.png">
-
+<p class ="solid">
 <div class = "b">
-        <form action="/Confirmacion" method="POST">
             <br>
-     <h3> Editar Perfil </h3>
+    
+     <h2>Editar Perfil</h2>
+
         <form action="/Inicio" method="POST">
+        <p class="center">
         <input value="{{ContraEdit}}" type="text" name="Contrasena" placeholder="Contraseña" required>
         <br>
         <input value="{{NombreEdit}}" type="text" name="Nombre" placeholder="Nombre" required>
         <br>
         <input value="{{BioEdit}}" type="text" name="Bio" placeholder="Biograchota" required>
         <br>
-        <input type="submit" value="ConfirmarCambios"/>
-        </form>
+        <br>
+        <input type="submit" value="Guardar Cambios"  class="button" style="vertical-align:middle"/>
         <a href="/BorrarCuenta"><button class="button" style="vertical-align:middle"><span class="j">Borrar Cuenta</span></button></a>
             <br>
+    </p>
 </form>
     </div>
     </div>
 </div>
+</p>
 </body>
 </html>
