@@ -59,11 +59,11 @@ class Usuario (object):
 
     def UpdateNombreVisible(self, Nombre):
         self.SetNombreVisible(Nombre)
-        DB().run("UPDATE Usuario SET Nombrevisible_Usuario = ('%s')" % (self.NombreVisible))
+        DB().run("UPDATE Usuario SET Nombrevisible_Usuario = ('%s') WHERE idUsuario = ('%s')" % (self.NombreVisible, self.idUsuario))
 
     def UpdateBiografia(self, Bio):
         self.SetBiografia(Bio)
-        DB().run("UPDATE Usuario SET Biografia_Usuario = ('%s')" % (self.Biografia))
+        DB().run("UPDATE Usuario SET Biografia_Usuario = ('%s') WHERE idUsuario = ('%s')" % (self.Biografia, self.idUsuario))
 
     # -------------ContrasenaUpdate--------------
 

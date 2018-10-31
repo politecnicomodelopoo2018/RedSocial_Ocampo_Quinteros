@@ -29,9 +29,11 @@
 <body background="../static/css/53766hd.png">
 <p class ="solid">
 <div class = "b">
-     <br>
+            <br>
+
      <h2>Editar Perfil</h2>
-        <form action="/Inicio" method="POST">
+
+        <form action="/PerfilEditado" method="POST">
         <p class="center">
         <input value="{{ContraEdit}}" type="text" name="Contrasena" placeholder="Contraseña" required>
         <br>
@@ -41,12 +43,12 @@
         <br>
         <br>
         <input type="submit" value="Guardar Cambios"  class="button" style="vertical-align:middle"/>
+        </p>
+        </form>
+        <p class="center">
         <a href="/BorrarCuenta"><button class="button" style="vertical-align:middle"><span class="j">Borrar Cuenta</span></button></a>
+        </p>
         <br>
-    </p>
-</form>
-    </div>
-    </div>
 </div>
 </p>
 </body>
