@@ -4,6 +4,8 @@ class Etiqueta(object):
     Usuario_idUsuario = None
     Post_idPost = None
 
+    # -------------Sets, Insert & Delete--------------
+
     def setUsuarioIdU(self, UidU):
         self.Usuario_idUsuario = UidU
 

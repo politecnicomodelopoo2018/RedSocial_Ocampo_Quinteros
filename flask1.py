@@ -9,8 +9,6 @@ from Etiqueta import Etiqueta
 import os
 from werkzeug.utils import secure_filename
 
-
-
 DB().SetConnection('127.0.0.1', 'root', 'alumno', 'mydb')
 
 unUsuario = Usuario()
@@ -148,7 +146,6 @@ def Likecito():
         unLike.Insert()
     else:
         DB().run("DELETE FROM `Like` WHERE Post_idPost = ('%s') AND Usuario_idUsuario = ('%s')" % (idPosta, idUserinho))
-
     return redirect("/Inicio#p" + idPosta)
 
 @app.route("/Comentario", methods = ['GET', 'POST'])
@@ -169,12 +166,6 @@ def BorrarComentarios():
     idComment = request.args.get("IdComment")
     DB().run("DELETE FROM Comment WHERE idComment = ('%s') AND Usuario_idUsuario = ('%s') AND Post_idPost = ('%s')" % (idComment, idUserinho, idPosta))
     return redirect("/Inicio#p" + idPosta)
-
-
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)

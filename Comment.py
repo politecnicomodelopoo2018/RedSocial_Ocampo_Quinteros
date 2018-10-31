@@ -7,6 +7,8 @@ class Comment (object):
     Post_idPost = None
     Usuario = None
 
+    # -------------Sets, Insert & Delete--------------
+
     def SetDescripcion(self, Descripcion):
         self.Descripcion = Descripcion
 
@@ -28,14 +30,14 @@ class Comment (object):
     def Delete(self):
         DB().run("DELETE FROM `Comment`")
 
+    # -------------Utilities--------------
+
     def ObjetizarIdUsuario(self):
         cursor = DB().run("SELECT * FROM Usuario WHERE idUsuario = ('%s')" % (self.Usuario))
         for item in cursor:
             unUsuario = Usuario()
             unUsuario.TraerObjeto(item["Nombre_Usuario"])
             self.SetUsuario(unUsuario)
-
-
 
     def TraerObjeto(self, idComment):
         Cursor = DB().run("SELECT * FROM Comment WHERE idComment = ('%s')" % (idComment))

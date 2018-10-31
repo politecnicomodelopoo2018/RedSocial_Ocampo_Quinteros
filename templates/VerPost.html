@@ -39,7 +39,7 @@
     <h6>{{publicacion.Fecha_Creacion_Post}}</h6>
     <br>
 
-    <p <h6>{{publicacion.NumeroDeLikes}}</h6> <a href="/Like?IdPost={{publicacion.idPost}}"><span><i class="fas fa-heart"></i></span> </a></p>
+    <p<h6>{{publicacion.NumeroDeLikes}}</h6> <a href="/Like?IdPost={{publicacion.idPost}}"><span><i class="fas fa-heart"></i></span> </a></p>
 
     <h6>{{publicacion.NombreVisibleUsuario()}} : {{publicacion.Descripcion_Post}}</h6>
     <form action="/Comentario?IdPost={{publicacion.idPost}}" method="POST">
@@ -47,7 +47,7 @@
     </form>
     {% for Comentario in CommentSeleccionado %}
         {% if Comentario.Post_idPost == publicacion.idPost %}
-            <p <h6>{{Comentario.Usuario.NombreVisible}} : {{Comentario.Descripcion}}</h6><a href="/BorrarComentario?IdPost={{publicacion.idPost}}&IdComment={{Comentario.idComment}}"><span><i class="fas fa-times"></i></span></a></p>
+            <p<h6>{{Comentario.Usuario.NombreVisible}} : {{Comentario.Descripcion}}</h6><a href="/BorrarComentario?IdPost={{publicacion.idPost}}&IdComment={{Comentario.idComment}}"><span><i class="fas fa-times"></i></span></a></p>
             <br>
         {% endif %}
     {% endfor %}

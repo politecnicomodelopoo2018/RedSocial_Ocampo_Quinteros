@@ -4,6 +4,8 @@ class Like(object):
     Usuario_idUsuario = None
     Post_idPost = None
 
+    # -------------Sets, Insert & Delete--------------
+
     def SetPost_idPost(self, Post_IdPost):
         self.Post_idPost = Post_IdPost
 
@@ -19,6 +21,8 @@ class Like(object):
 
     def Delete(self):
         DB().run("DELETE FROM Like")
+
+    # -------------Utilities--------------
 
     def TraerObjeto(self, idpost, idusuario):
         Cursor = DB().run("SELECT * FROM `Like` WHERE Usuario_idUsuario = ('%s') AND Post_idPost = ('%s')" % (idusuario, idpost))

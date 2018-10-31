@@ -30,8 +30,7 @@ class Post (object):
         self.URL_post = URL_post
 
     def Insert(self):
-        cursor = DB().run("INSERT INTO Post (Fecha_Creacion_Post, Descripcion_Post, Ubicacion_Post, "
-                          "Usuario_idUsuario,URL_Post) VALUES ('%s', '%s', '%s', '%s', '%s')" % (self.Fecha_Creacion_Post, self.Descripcion_Post, self.Ubicacion_Post, self.Usuario_idUsuario, self.URL_post))
+        cursor = DB().run("INSERT INTO Post (Fecha_Creacion_Post, Descripcion_Post, Ubicacion_Post, ""Usuario_idUsuario,URL_Post) VALUES ('%s', '%s', '%s', '%s', '%s')" % (self.Fecha_Creacion_Post, self.Descripcion_Post, self.Ubicacion_Post, self.Usuario_idUsuario, self.URL_post))
         self.idPost = cursor.lastrowid
 
     def SubirFoto(self, idUsuario, URL_Imagen, Descripcion, Ubicacion):
@@ -55,6 +54,8 @@ class Post (object):
         self.SetUbicacion(ubicacion)
         DB().run("UPDATE Post SET Ubicacion_Post = ('%s')" % (self.Ubicacion_Post))
 
+    # -------------Utilities--------------
+
     def TraerObjeto(self, idPost):
         Cursor = DB().run("SELECT * FROM Post WHERE idPost = ('%s')" % (idPost))
         for item in Cursor:
@@ -75,4 +76,3 @@ class Post (object):
         cursor = DB().run("SELECT COUNT(*) as H FROM `Like` WHERE ('%s')=Post_idPost" % (self.idPost))
         Contadores = cursor.fetchone()
         self.NumeroDeLikes = Contadores["H"]
-

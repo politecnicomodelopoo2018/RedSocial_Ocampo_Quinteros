@@ -4,6 +4,8 @@ class UHU(object):
     Usuario_idUsuario = None
     Usuario_idUsuarione = None
 
+    # -------------Sets, Insert & Delete--------------
+
     def setUsuarioIdU (self, UidU):
         self.Usuario_idUsuario = UidU
 

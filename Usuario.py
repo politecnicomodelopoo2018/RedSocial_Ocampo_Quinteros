@@ -77,7 +77,7 @@ class Usuario (object):
             Validacion = True
         return Validacion
 
-    # ----------TraerObjetoDeDataBase------------
+    # -------------Utilities--------------
 
     def TraerObjeto(self, Usuario):
         Cursor = DB().run("SELECT * FROM Usuario WHERE Nombre_Usuario = ('%s')" % (Usuario))
