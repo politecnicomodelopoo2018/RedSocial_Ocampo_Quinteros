@@ -53,7 +53,7 @@ def Registrado():
 
 @app.route("/Confirmacion", methods=['GET', 'POST'])
 def Confirmacion():
-    if int(request.args.get("Co")) == 1:
+    if request.method == 'POST':
         UsuarioConfirmacion = Usuario()
         Usuario1 = request.form.get("Usuario")
         Contrasena1 = request.form.get("Contrasena")
@@ -65,7 +65,7 @@ def Confirmacion():
                 return redirect("/Inicio")
             if UsuarioConfirmacion.ValidarContrasena(Contrasena1) == False:
                 return redirect("/")
-    elif int(request.args.get("Co")) != 1:
+    else:
         return redirect("/")
 
 @app.route("/Inicio", methods = ['GET', 'POST'])
@@ -114,19 +114,19 @@ def EditarPerfil():
 
 @app.route("/PerfilEditado", methods=['GET', 'POST'])
 def PerfilEditado():
-    if 'User' in session:
-        UsuarioPerfilEditado = Usuario()
-        UsuarioPerfilEditado.TraerObjeto(session['User'])
-        EditedPassword = request.form.get("Contrasena")
-        EditedName = request.form.get("Nombre")
-        EditedBio = request.form.get("Bio")
-        if type(EditedName) != type(None):
-            UsuarioPerfilEditado.UpdateNombreVisible(EditedName)
-            UsuarioPerfilEditado.UpdateBiografia(EditedBio)
-            UsuarioPerfilEditado.UpdateContrasena(EditedPassword)
-        return redirect("/Inicio")
-    else:
+    if not 'User' in session:
         return redirect("/")
+
+    UsuarioPerfilEditado = Usuario()
+    UsuarioPerfilEditado.TraerObjeto(session['User'])
+    EditedPassword = request.form.get("Contrasena")
+    EditedName = request.form.get("Nombre")
+    EditedBio = request.form.get("Bio")
+    if type(EditedName) != type(None):
+        UsuarioPerfilEditado.UpdateNombreVisible(EditedName)
+        UsuarioPerfilEditado.UpdateBiografia(EditedBio)
+        UsuarioPerfilEditado.UpdateContrasena(EditedPassword)
+    return redirect("/Inicio")
 
 @app.route("/BorrarCuenta", methods=['GET', 'POST'])
 def BorrarCuenta():

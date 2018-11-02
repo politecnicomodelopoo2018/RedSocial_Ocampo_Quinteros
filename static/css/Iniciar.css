@@ -1,23 +1,22 @@
 div {
         width: 300px;
         position: center ;
-
       }
 
 div.a {
       height: 250px;
       border: 3px solid black;
       background: white;
-  border-image-slice: 20;
-border-radius: 30px;
+      border-image-slice: 20;
+      border-radius: 30px;
       }
 
 .center {
  display: block;
  margin-left: auto;
  margin-right: auto;
-
         }
+
 .centertop{
   margin-top: auto;
   margin-bottom: auto;
